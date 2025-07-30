@@ -16,5 +16,12 @@ export const registerUser = async (data: RegisterPayload) => {
 
 export const login = async (data: LoginPayload) => {
   const response = await api.post<LoginResponse>("/login", data);
-  return response.data.data;
+
+  const { status, message, data: resData } = response.data;
+
+  if (status !== 0) {
+    throw new Error(message);
+  }
+
+  return resData;
 };

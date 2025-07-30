@@ -6,6 +6,7 @@ import IllustrationSection from "../../components/IllustrationSection";
 import { registerUser } from "../../services/authServices";
 import { AxiosError } from "axios";
 import type { RegisterPayload } from "../../types/auth";
+import { toast } from "react-toastify";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -14,12 +15,12 @@ export default function RegisterPage() {
     try {
       const response = await registerUser(data);
       console.log("Registrasi berhasil:", response.data);
-      alert("Registrasi berhasil");
+      toast.success("Registrasi berhasil");
       navigate("/login");
     } catch (err: unknown) {
-      const axiosError = err as AxiosError<{ detail?: string }>;
-      alert(
-        axiosError.response?.data?.detail ||
+      const axiosError = err as AxiosError<{ message?: string }>;
+      toast.error(
+        axiosError.response?.data?.message ||
           "Registrasi gagal. Silakan coba lagi."
       );
     }
