@@ -1,15 +1,32 @@
 "use client";
 
+import { useNavigate } from "react-router-dom";
 import RegistrasiForm from "./RegistrasiForm";
 import IllustrationSection from "../../components/IllustrationSection";
+import { registerUser } from "../../services/authServices";
+import { AxiosError } from "axios";
+import type { RegisterPayload } from "../../types/auth";
 
 export default function RegisterPage() {
-  const handleLogin = (email: string, password: string) => {
-    console.log("Login submitted:", { email, password });
+  const navigate = useNavigate();
+
+  const handleRegister = async (data: RegisterPayload) => {
+    try {
+      const response = await registerUser(data);
+      console.log("Registrasi berhasil:", response.data);
+      alert("Registrasi berhasil");
+      navigate("/login");
+    } catch (err: unknown) {
+      const axiosError = err as AxiosError<{ detail?: string }>;
+      alert(
+        axiosError.response?.data?.detail ||
+          "Registrasi gagal. Silakan coba lagi."
+      );
+    }
   };
 
   const handleRegisterClick = () => {
-    console.log("Navigate to registration");
+    navigate("/login");
   };
 
   return (
@@ -17,7 +34,7 @@ export default function RegisterPage() {
       <div className="flex-1 flex items-center justify-center bg-white">
         <RegistrasiForm
           submitButtonText="Registrasi"
-          onSubmit={handleLogin}
+          onSubmit={handleRegister}
           onFooterLinkClick={handleRegisterClick}
         />
       </div>

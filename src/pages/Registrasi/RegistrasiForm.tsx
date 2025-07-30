@@ -4,24 +4,35 @@ import type React from "react";
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import type { RegisterPayload } from "../../types/auth";
+import { registerUser } from "../../services/authServices";
+import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 import LogoComponent from "../../components/Logo";
 import Button from "../../components/Button";
 
-interface LoginFormProps {
+interface RegisterFormProps {
   title?: string;
   emailPlaceholder?: string;
   passwordPlaceholder?: string;
   submitButtonText?: string;
   footerText?: string;
   footerLinkText?: string;
-  onSubmit?: (email: string, password: string) => void;
+  onSubmit?: (data: {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+  }) => void;
   onFooterLinkClick?: () => void;
 }
 
 export default function RegistrasiForm({
   submitButtonText = "Registrasi",
   onSubmit,
-}: LoginFormProps) {
+}: RegisterFormProps) {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [email, setEmail] = useState("");
@@ -29,17 +40,37 @@ export default function RegistrasiForm({
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (onSubmit) {
-      onSubmit(email, password);
-    } else {
-      console.log("Login attempt:", { email, password });
-    }
+
     if (password !== confirmPassword) {
-      alert("Password dan konfirmasi tidak cocok");
+      setPasswordMismatch(true);
       return;
+    }
+
+    setPasswordMismatch(false);
+
+    const data: RegisterPayload = {
+      email,
+      password,
+      first_name: firstName,
+      last_name: lastName,
+    };
+
+    try {
+      if (onSubmit) {
+        onSubmit(data);
+      } else {
+        const response = await registerUser(data);
+        console.log("Registrasi berhasil:", response.data);
+        toast.success("registrasi Berhasil");
+        navigate("/login");
+      }
+    } catch (err: unknown) {
+      const axiosError = err as AxiosError<{ detail?: string }>;
+      toast.error(axiosError.response?.data?.detail || "register gagal");
     }
   };
 
@@ -133,6 +164,11 @@ export default function RegistrasiForm({
             )}
           </span>
         </div>
+        {passwordMismatch && (
+          <p className="flex justify-end text-red-500 text-xs">
+            Password tidak sama
+          </p>
+        )}
 
         <Button type="submit" variant="primary">
           {submitButtonText}
