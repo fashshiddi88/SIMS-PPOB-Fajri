@@ -1,7 +1,7 @@
 import api from "./api";
+import type { UserProfile } from "../types/auth";
 
-export const getProfile = async (token: string) => {
-  return api.get("/profile", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-};
+export async function getProfile(): Promise<UserProfile> {
+  const response = await api.get("/profile");
+  return response.data.data;
+}

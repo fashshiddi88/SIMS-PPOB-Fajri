@@ -8,13 +8,13 @@ interface ProfileSectionProps {
 
 export default function ProfileSection({
   profileImage,
-  userName = "Kristanto Wibowo",
+  userName,
 }: ProfileSectionProps) {
   return (
     <div className="flex flex-col items-start">
       <div className="w-16 h-16 rounded-full overflow-hidden mb-4">
         <img
-          src={profileImage ? profileImage : ProfilePhoto}
+          src={profileImage ?? ProfilePhoto}
           alt="Profile"
           className="w-full h-full object-cover"
         />

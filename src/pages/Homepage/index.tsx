@@ -1,12 +1,39 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { getProfile } from "../../services/userServices";
 import Navbar from "../../components/Navbar";
 import ProfileSection from "../../components/ProfileSection";
 import BalanceCard from "../../components/Balance-card";
 import ServiceMenu from "../../components/Service-menu";
 import BannerSlider from "../../components/BannerSlider";
+import type { UserProfile } from "../../types/auth";
 
 export default function Homepage() {
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const result = await getProfile();
+        setProfile(result);
+      } catch (error) {
+        console.error("Gagal mengambil profile", error);
+      }
+    }
+
+    fetchProfile();
+  }, []);
+
+  const fixedProfile = profile
+    ? {
+        ...profile,
+        profile_image: profile.profile_image?.toLowerCase().endsWith("/null")
+          ? null
+          : profile.profile_image,
+      }
+    : null;
+
   const handleNavigation = (section: string) => {
     console.log(`Navigate to ${section}`);
   };
@@ -21,7 +48,6 @@ export default function Homepage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
       <Navbar
         onTopUpClick={() => handleNavigation("topup")}
         onTransactionClick={() => handleNavigation("transaction")}
@@ -29,10 +55,14 @@ export default function Homepage() {
       />
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Row 1: Profile and Balance */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           <ProfileSection
-            userName="Kristanto Wibowo"
+            profileImage={fixedProfile?.profile_image || undefined}
+            userName={
+              fixedProfile
+                ? `${fixedProfile.first_name} ${fixedProfile.last_name}`
+                : undefined
+            }
             welcomeText="Selamat datang,"
           />
           <BalanceCard
@@ -42,12 +72,10 @@ export default function Homepage() {
           />
         </div>
 
-        {/* Row 2: Service Menu */}
         <div className="mb-12">
           <ServiceMenu onServiceClick={handleServiceClick} />
         </div>
 
-        {/* Row 3: Banner Slider */}
         <div>
           <BannerSlider
             title="Temukan promo menarik"
