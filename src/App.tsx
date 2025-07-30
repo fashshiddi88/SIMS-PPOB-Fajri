@@ -1,0 +1,18 @@
+import { Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Registrasi";
+import Homepage from "./pages/Homepage";
+import "./App.css";
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/registrasi" element={<RegisterPage />} />
+      <Route path="/home" element={<Homepage />} />
+    </Routes>
+  );
+}
+
+export default App;
