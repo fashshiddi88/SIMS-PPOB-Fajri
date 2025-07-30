@@ -2,15 +2,19 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { login } from "../../services/authServices";
 import type { LoginPayload } from "../../types/auth";
 import LoginForm from "./LoginForm";
 import IllustrationSection from "../../components/IllustrationSection";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { loginSuccess } from "../../features/auth/authSlice";
+import type { AppDispatch } from "../../store";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const handleLogin = async (email: string, password: string) => {
@@ -20,6 +24,7 @@ export default function LoginPage() {
       const result = await login(payload);
 
       localStorage.setItem("token", result.token);
+      dispatch(loginSuccess(result.token));
       toast.success("Login berhasil!");
 
       navigate("/home");
