@@ -15,7 +15,7 @@ export default function Button({
   children,
   onClick,
   type = "button",
-  variant = "primary",
+  variant,
   disabled = false,
   className = "",
 }: ButtonProps) {
@@ -32,7 +32,9 @@ export default function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+      className={`${baseClasses} ${
+        variant ? variantClasses[variant] : ""
+      } ${className}`}
     >
       {children}
     </button>

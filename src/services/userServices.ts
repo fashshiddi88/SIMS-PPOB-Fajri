@@ -3,6 +3,7 @@ import type {
   ProfileResponse,
   BannerResponse,
   ServicesResponse,
+  TopUpResponse,
 } from "../types/auth";
 
 export async function getProfile(): Promise<ProfileResponse> {
@@ -24,3 +25,10 @@ export const getServices = async (): Promise<ServicesResponse> => {
   const response = await api.get("/services");
   return response.data;
 };
+
+export async function topUpBalance(amount: number): Promise<TopUpResponse> {
+  const response = await api.post<TopUpResponse>("/topup", {
+    top_up_amount: amount,
+  });
+  return response.data;
+}

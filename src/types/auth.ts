@@ -68,3 +68,11 @@ export interface ServicesResponse {
   message: string;
   data: ServiceItem[];
 }
+
+export interface TopUpResponse {
+  status: number;
+  message: string;
+  data: {
+    balance: number;
+  } | null;
+}

@@ -3,30 +3,18 @@
 import { useState, useEffect } from "react";
 import BgBalance from "../assets/Background Saldo.png";
 import { Eye, EyeOff } from "lucide-react";
-import { getBalance } from "../services/userServices";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { fetchBalance } from "../features/balance/balanceSlice";
 
 export default function BalanceCard() {
-  const [balance, setBalance] = useState<number | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+
+  const { balance, error } = useAppSelector((state) => state.balance);
   const [showBalance, setShowBalance] = useState(false);
 
   useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        const res = await getBalance();
-        if (res.status === 0 && res.data) {
-          setBalance(res.data.balance);
-        } else {
-          setError(res.message || "Gagal memuat saldo.");
-        }
-      } catch (err) {
-        console.error(err);
-        setError("Terjadi kesalahan saat mengambil saldo.");
-      }
-    };
-
-    fetchBalance();
-  }, []);
+    dispatch(fetchBalance());
+  }, [dispatch]);
 
   const formatBalance = (amount: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -55,7 +43,7 @@ export default function BalanceCard() {
         {!error && (
           <div className="flex items-center gap-2">
             <span className="text-sm bg-[#f13b2f] h-6 px-2 py-0.5 rounded">
-              {showBalance ? "Sembunyikan" : "Lihat Saldo"}
+              {showBalance ? "Tutup Saldo" : "Lihat Saldo"}
             </span>
             <button
               onClick={() => setShowBalance(!showBalance)}

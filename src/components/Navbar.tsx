@@ -1,42 +1,42 @@
 "use client";
 
+import { useLocation, Link } from "react-router-dom";
 import LogoComponent from "./Logo";
 
-interface NavbarProps {
-  onTopUpClick?: () => void;
-  onTransactionClick?: () => void;
-  onAccountClick?: () => void;
-}
+export default function Navbar() {
+  const location = useLocation();
 
-export default function Navbar({
-  onTopUpClick,
-  onTransactionClick,
-  onAccountClick,
-}: NavbarProps) {
+  const isActive = (path: string) => location.pathname === path;
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <LogoComponent />
 
         <div className="flex items-center space-x-8">
-          <button
-            onClick={onTopUpClick}
-            className="text-gray-600 hover:text-gray-800 font-medium"
+          <Link
+            to="/topup"
+            className={`font-medium hover:text-gray-800 ${
+              isActive("/topup") ? "text-red-500" : "text-gray-600"
+            }`}
           >
             Top Up
-          </button>
-          <button
-            onClick={onTransactionClick}
-            className="text-gray-600 hover:text-gray-800 font-medium"
+          </Link>
+          <Link
+            to="/transaction"
+            className={`font-medium hover:text-gray-800 ${
+              isActive("/transaction") ? "text-red-500" : "text-gray-600"
+            }`}
           >
             Transaction
-          </button>
-          <button
-            onClick={onAccountClick}
-            className="text-gray-600 hover:text-gray-800 font-medium"
+          </Link>
+          <Link
+            to="/account"
+            className={`font-medium hover:text-gray-800 ${
+              isActive("/account") ? "text-red-500" : "text-gray-600"
+            }`}
           >
             Akun
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

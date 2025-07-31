@@ -28,10 +28,6 @@ export default function Homepage() {
       }
     : null;
 
-  const handleNavigation = (section: string) => {
-    console.log(`Navigate to ${section}`);
-  };
-
   const handleServiceClick = (serviceId: string) => {
     console.log(`Service clicked: ${serviceId}`);
   };
@@ -42,11 +38,7 @@ export default function Homepage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar
-        onTopUpClick={() => handleNavigation("topup")}
-        onTransactionClick={() => handleNavigation("transaction")}
-        onAccountClick={() => handleNavigation("account")}
-      />
+      <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
