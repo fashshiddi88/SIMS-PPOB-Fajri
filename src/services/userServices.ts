@@ -1,12 +1,17 @@
 import api from "./api";
-import type { UserProfile } from "../types/auth";
+import type { ProfileResponse, BannerResponse } from "../types/auth";
 
-export async function getProfile(): Promise<UserProfile> {
+export async function getProfile(): Promise<ProfileResponse> {
   const response = await api.get("/profile");
-  return response.data.data;
+  return response.data;
 }
 
 export async function getBalance() {
   const response = await api.get("/balance");
+  return response.data;
+}
+
+export async function getBanner(): Promise<BannerResponse> {
+  const response = await api.get("/banner");
   return response.data;
 }

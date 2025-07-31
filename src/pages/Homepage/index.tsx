@@ -15,8 +15,12 @@ export default function Homepage() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const result = await getProfile();
-        setProfile(result);
+        const res = await getProfile();
+        if (res.status === 0) {
+          setProfile(res.data);
+        } else {
+          console.error("Gagal mengambil profile:", res.message);
+        }
       } catch (error) {
         console.error("Gagal mengambil profile", error);
       }
@@ -65,11 +69,7 @@ export default function Homepage() {
             }
             welcomeText="Selamat datang,"
           />
-          <BalanceCard
-            balance={1000000}
-            balanceText="Saldo anda"
-            toggleText="Lihat Saldo"
-          />
+          <BalanceCard />
         </div>
 
         <div className="mb-12">

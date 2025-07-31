@@ -30,10 +30,28 @@ export interface UserProfile {
   profile_image: string;
 }
 
+export interface ProfileResponse {
+  status: number;
+  message: string;
+  data: UserProfile;
+}
+
 export interface BalanceResponse {
   status: number;
   message: string;
   data: {
     balance: number;
   } | null;
+}
+
+export interface Banner {
+  banner_name: string;
+  banner_image: string;
+  description: string;
+}
+
+export interface BannerResponse {
+  status: number;
+  message: string;
+  data: Banner[];
 }
