@@ -1,33 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getProfile } from "../../services/userServices";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { fetchProfile } from "../../features/profile/profileSlice";
+import type { RootState } from "../../store";
 import Navbar from "../../components/Navbar";
 import ProfileSection from "../../components/ProfileSection";
 import BalanceCard from "../../components/Balance-card";
 import ServiceMenu from "../../components/Service-menu";
 import BannerSlider from "../../components/BannerSlider";
-import type { UserProfile } from "../../types/auth";
 
 export default function Homepage() {
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const dispatch = useAppDispatch();
+
+  const { data: profile } = useAppSelector((state: RootState) => state.profile);
 
   useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const res = await getProfile();
-        if (res.status === 0) {
-          setProfile(res.data);
-        } else {
-          console.error("Gagal mengambil profile:", res.message);
-        }
-      } catch (error) {
-        console.error("Gagal mengambil profile", error);
-      }
-    }
-
-    fetchProfile();
-  }, []);
+    dispatch(fetchProfile());
+  }, [dispatch]);
 
   const fixedProfile = profile
     ? {

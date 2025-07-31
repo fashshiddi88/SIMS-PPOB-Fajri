@@ -1,5 +1,9 @@
 import api from "./api";
-import type { ProfileResponse, BannerResponse } from "../types/auth";
+import type {
+  ProfileResponse,
+  BannerResponse,
+  ServicesResponse,
+} from "../types/auth";
 
 export async function getProfile(): Promise<ProfileResponse> {
   const response = await api.get("/profile");
@@ -15,3 +19,8 @@ export async function getBanner(): Promise<BannerResponse> {
   const response = await api.get("/banner");
   return response.data;
 }
+
+export const getServices = async (): Promise<ServicesResponse> => {
+  const response = await api.get("/services");
+  return response.data;
+};

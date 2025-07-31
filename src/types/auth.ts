@@ -55,3 +55,16 @@ export interface BannerResponse {
   message: string;
   data: Banner[];
 }
+
+export interface ServiceItem {
+  service_code: string;
+  service_name: string;
+  service_icon: string;
+  service_tariff: number;
+}
+
+export interface ServicesResponse {
+  status: number;
+  message: string;
+  data: ServiceItem[];
+}
