@@ -4,6 +4,7 @@ import type {
   BannerResponse,
   ServicesResponse,
   TopUpResponse,
+  TransactionResponse,
 } from "../types/auth";
 
 export async function getProfile(): Promise<ProfileResponse> {
@@ -30,5 +31,15 @@ export async function topUpBalance(amount: number): Promise<TopUpResponse> {
   const response = await api.post<TopUpResponse>("/topup", {
     top_up_amount: amount,
   });
+  return response.data;
+}
+
+export async function createTransaction(
+  serviceCode: string
+): Promise<TransactionResponse> {
+  const response = await api.post<TransactionResponse>("/transaction", {
+    service_code: serviceCode,
+  });
+
   return response.data;
 }

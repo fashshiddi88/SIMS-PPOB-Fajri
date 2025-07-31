@@ -76,3 +76,18 @@ export interface TopUpResponse {
     balance: number;
   } | null;
 }
+
+export interface TransactionData {
+  invoice_number: string;
+  service_code: string;
+  service_name: string;
+  transaction_type: "PAYMENT";
+  total_amount: number;
+  created_on: string;
+}
+
+export interface TransactionResponse {
+  status: number;
+  message: string;
+  data: TransactionData | null;
+}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { WalletMinimal } from "lucide-react";
 import Button from "./Button";
 
 interface TopupFormProps {
@@ -106,13 +107,16 @@ export default function TopupForm({
           </div>
           <div className="flex gap-x-2 justify-between">
             <div className="relative flex flex-col w-5/8 gap-5 justify-between">
-              <input
-                type="text"
-                placeholder={placeholder}
-                value={amount ? formatCurrency(Number.parseInt(amount)) : ""}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-lg"
-              />
+              <div className="relative">
+                <WalletMinimal className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder={placeholder}
+                  value={amount ? formatCurrency(Number.parseInt(amount)) : ""}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-lg"
+                />
+              </div>
 
               <Button
                 type="submit"

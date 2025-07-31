@@ -6,7 +6,7 @@ import { fetchServices } from "../features/services/serviceSlice";
 import type { ServiceItem } from "../types/auth";
 
 interface ServiceMenuProps {
-  onServiceClick?: (serviceId: string) => void;
+  onServiceClick?: (service: ServiceItem) => void;
 }
 
 export default function ServiceMenu({ onServiceClick }: ServiceMenuProps) {
@@ -31,7 +31,7 @@ export default function ServiceMenu({ onServiceClick }: ServiceMenuProps) {
       {services.map((service: ServiceItem) => (
         <button
           key={service.service_code}
-          onClick={() => onServiceClick?.(service.service_code)}
+          onClick={() => onServiceClick?.(service)}
           className="flex flex-col items-center m-4 hover:bg-gray-50 rounded-lg transition-colors"
         >
           <div

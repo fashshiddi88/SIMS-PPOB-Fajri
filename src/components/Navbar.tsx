@@ -10,7 +10,9 @@ export default function Navbar() {
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <LogoComponent />
+        <Link to="/home">
+          <LogoComponent />
+        </Link>
 
         <div className="flex items-center space-x-8">
           <Link
@@ -22,9 +24,11 @@ export default function Navbar() {
             Top Up
           </Link>
           <Link
-            to="/transaction"
+            to="/transaction/history"
             className={`font-medium hover:text-gray-800 ${
-              isActive("/transaction") ? "text-red-500" : "text-gray-600"
+              isActive("/transaction/history")
+                ? "text-red-500"
+                : "text-gray-600"
             }`}
           >
             Transaction

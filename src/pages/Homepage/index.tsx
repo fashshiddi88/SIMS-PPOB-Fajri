@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { fetchProfile } from "../../features/profile/profileSlice";
 import type { RootState } from "../../store";
+import type { ServiceItem } from "../../types/auth";
 import Navbar from "../../components/Navbar";
 import ProfileSection from "../../components/ProfileSection";
 import BalanceCard from "../../components/Balance-card";
@@ -12,6 +14,7 @@ import BannerSlider from "../../components/BannerSlider";
 
 export default function Homepage() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { data: profile } = useAppSelector((state: RootState) => state.profile);
 
@@ -28,8 +31,8 @@ export default function Homepage() {
       }
     : null;
 
-  const handleServiceClick = (serviceId: string) => {
-    console.log(`Service clicked: ${serviceId}`);
+  const handleServiceClick = (service: ServiceItem) => {
+    navigate("/transaction", { state: { service } });
   };
 
   const handleBannerClick = (bannerId: string) => {
