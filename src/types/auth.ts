@@ -29,3 +29,11 @@ export interface UserProfile {
   last_name: string;
   profile_image: string;
 }
+
+export interface BalanceResponse {
+  status: number;
+  message: string;
+  data: {
+    balance: number;
+  } | null;
+}

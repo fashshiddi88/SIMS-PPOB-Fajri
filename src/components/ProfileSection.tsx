@@ -20,7 +20,7 @@ export default function ProfileSection({
         />
       </div>
       <p className="text-gray-600 text-sm mb-1">Selamat Datang,</p>
-      <h2 className="text-xl font-bold text-gray-800">{userName}</h2>
+      <h2 className="text-xl font-bold text-gray-800">{userName ?? "user"}</h2>
     </div>
   );
 }
