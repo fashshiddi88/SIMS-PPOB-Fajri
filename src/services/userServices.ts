@@ -5,6 +5,8 @@ import type {
   ServicesResponse,
   TopUpResponse,
   TransactionResponse,
+  UpdateProfileBody,
+  UpdateProfileResponse,
 } from "../types/auth";
 
 export async function getProfile(): Promise<ProfileResponse> {
@@ -40,6 +42,35 @@ export async function createTransaction(
   const response = await api.post<TransactionResponse>("/transaction", {
     service_code: serviceCode,
   });
+
+  return response.data;
+}
+
+export async function updateProfile(
+  body: UpdateProfileBody
+): Promise<UpdateProfileResponse> {
+  const response = await api.put<UpdateProfileResponse>(
+    "/profile/update",
+    body
+  );
+  return response.data;
+}
+
+export async function uploadProfileImage(
+  file: File
+): Promise<UpdateProfileResponse> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await api.put<UpdateProfileResponse>(
+    "/profile/image",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 
   return response.data;
 }

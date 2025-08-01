@@ -34,9 +34,9 @@ export default function Navbar() {
             Transaction
           </Link>
           <Link
-            to="/account"
+            to="/profile"
             className={`font-medium hover:text-gray-800 ${
-              isActive("/account") ? "text-red-500" : "text-gray-600"
+              isActive("/profile") ? "text-red-500" : "text-gray-600"
             }`}
           >
             Akun

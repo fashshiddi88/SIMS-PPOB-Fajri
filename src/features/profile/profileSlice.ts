@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import type { UserProfile } from "../../types/auth";
 import { getProfile } from "../../services/userServices";
 
@@ -41,6 +42,9 @@ const profileSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    setProfile(state, action: PayloadAction<UserProfile>) {
+      state.data = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -59,5 +63,5 @@ const profileSlice = createSlice({
   },
 });
 
-export const { clearProfile } = profileSlice.actions;
+export const { clearProfile, setProfile } = profileSlice.actions;
 export default profileSlice.reducer;

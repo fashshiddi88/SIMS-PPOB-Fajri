@@ -4,6 +4,7 @@ import RegisterPage from "./pages/Registrasi";
 import Homepage from "./pages/Homepage";
 import TopupPage from "./pages/Topup";
 import TransactionPage from "./pages/Transaksi";
+import ProfilePage from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,6 +39,14 @@ function App() {
           element={
             <ProtectedRoute>
               <TransactionPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
             </ProtectedRoute>
           }
         />

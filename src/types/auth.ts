@@ -91,3 +91,19 @@ export interface TransactionResponse {
   message: string;
   data: TransactionData | null;
 }
+
+export interface UpdateProfileBody {
+  first_name: string;
+  last_name: string;
+}
+
+export interface UpdateProfileResponse {
+  status: number;
+  message: string;
+  data: {
+    email: string;
+    first_name: string;
+    last_name: string;
+    profile_image: string;
+  } | null;
+}
