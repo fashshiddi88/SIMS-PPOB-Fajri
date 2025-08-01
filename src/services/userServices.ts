@@ -7,6 +7,8 @@ import type {
   TransactionResponse,
   UpdateProfileBody,
   UpdateProfileResponse,
+  Transaction,
+  HistoryResponse,
 } from "../types/auth";
 
 export async function getProfile(): Promise<ProfileResponse> {
@@ -73,4 +75,15 @@ export async function uploadProfileImage(
   );
 
   return response.data;
+}
+
+export async function getTransactionHistory(
+  offset = 0,
+  limit = 5
+): Promise<Transaction[]> {
+  const response = await api.get<HistoryResponse>("/transaction/history", {
+    params: { offset, limit },
+  });
+  if (response.data.status !== 0) throw new Error("Gagal mengambil data");
+  return response.data.data.records;
 }

@@ -107,3 +107,23 @@ export interface UpdateProfileResponse {
     profile_image: string;
   } | null;
 }
+
+export interface Transaction {
+  invoice_number: string;
+  transaction_type: "TOPUP" | "PAYMENT";
+  description: string;
+  total_amount: number;
+  created_on: string;
+}
+
+interface HistoryData {
+  offset: number;
+  limit: number;
+  records: Transaction[];
+}
+
+export interface HistoryResponse {
+  status: number;
+  message: string;
+  data: HistoryData;
+}

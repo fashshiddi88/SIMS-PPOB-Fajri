@@ -134,19 +134,15 @@ export default function ProfileForm({
         ) : (
           <Button
             onClick={handleEditClick}
-            variant="primary"
-            className="w-full"
+            variant="secondary"
+            className="w-full border-red-500 text-red-500 hover:bg-red-50"
           >
             {editButtonText}
           </Button>
         )}
 
         {!isEditing && (
-          <Button
-            onClick={onLogout}
-            variant="secondary"
-            className="w-full border-red-500 text-red-500 hover:bg-red-50"
-          >
+          <Button onClick={onLogout} variant="primary" className="w-full ">
             {logoutButtonText}
           </Button>
         )}

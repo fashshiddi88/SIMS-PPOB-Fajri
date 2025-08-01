@@ -5,6 +5,7 @@ import Homepage from "./pages/Homepage";
 import TopupPage from "./pages/Topup";
 import TransactionPage from "./pages/Transaksi";
 import ProfilePage from "./pages/Profile";
+import HistoryPage from "./pages/History";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -47,6 +48,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/transaction/history"
+          element={
+            <ProtectedRoute>
+              <HistoryPage />
             </ProtectedRoute>
           }
         />
